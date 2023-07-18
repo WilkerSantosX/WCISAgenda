@@ -16,6 +16,7 @@ $(document).ready(function () {
 
     horaDe = getHourNow(new Date());   
     $("#hora_retirada").val(horaDe);
+    $("#hora_devolucao").val(horaDe);
 
     $('.datepicker-de').datepicker({
         autoClose: true,        
@@ -173,15 +174,15 @@ $(document).ready(function () {
 
 
             var options = $('#agendamento_tipo option:selected');
-            const dadosHTML =   '<tr>' + 
-                                    '<td>' + qtdReserva + '</td>' +
-                                    '<td>' + options[0].innerHTML + '</td>' +
-                                    '<td>' + $("#data_retirada").val() + ' ' +  $("#hora_retirada").val() + '</td>' +
-                                    '<td>' + $("#data_devolucao").val() + ' ' +  $("#hora_devolucao").val() + '</td>' +
-                                    '<td>' + '0,00' + '</td>' +
-                                '</tr>';
+            const dadosHTML = '<div class="col s12 m12 l12"><div class="card"><div class="card-content"><div class="card-title">' +  
+                                '<h6>' + options[0].innerHTML + '</h6></div>' +
+                                '<p>Protocolo: ' + qtdReserva + '</p>' +
+                                '<p>Data/Hora Início: ' + $("#data_retirada").val() + ' ' +  $("#hora_retirada").val() + '</p>' +
+                                '<p>Data/Hora Fim: ' + $("#data_devolucao").val() + ' ' +  $("#hora_devolucao").val() + '</p>' +
+                                '<p>Valor: ' + '0,00' +  '</p>' +
+                                '</div></div></div>';
 
-            $('#tdados').append(dadosHTML);  
+            $('#row-agendas').append(dadosHTML);  
 
         }else{
             
@@ -195,15 +196,15 @@ $(document).ready(function () {
             $('#count_agendamentos_id').addClass("orange");              
             
             var options = $('#agendamento_tipo option:selected');
-            const dadosHTML =   '<tr>' + 
-                                    '<td>' + qtdReserva + '</td>' +
-                                    '<td>' + options[0].innerHTML + '</td>' +
-                                    '<td>' + $("#data_retirada").val() + ' ' +  $("#hora_retirada").val() + '</td>' +
-                                    '<td>' + '-' + '</td>' +
-                                    '<td>' + '0,00' + '</td>' +
-                                '</tr>';
+            const dadosHTML = '<div class="col s12 m12 l12"><div class="card"><div class="card-content"><div class="card-title">' +  
+                                '<h6>' + options[0].innerHTML + '</h6></div>' +
+                                '<p>Protocolo: ' + qtdReserva + '</p>' +
+                                '<p>Data/Hora Início: ' + $("#data_retirada").val() + ' ' +  $("#hora_retirada").val() + '</p>' +
+                                '<p>Data/Hora Fim: ' +  '-' + '</p>' +
+                                '<p>Valor: ' + '0,00' +  '</p>' +
+                                '</div></div></div>';
 
-            $('#tdados').append(dadosHTML);             
+            $('#row-agendas').append(dadosHTML);             
         }
 
         Swal.fire({
