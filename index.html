@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>WCIS Agenda</title>
+
+	<!-- CSS -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+		integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+		crossorigin="" />
+	<link type="text/css" rel="stylesheet" href="Content/materialize/materialize.min.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="Content/sweetalert2/sweetalert2.min.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="Content/site.css" media="screen,projection" />
+
+	<!-- JS -->
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+		integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="Scripts/materialize/materialize.min.js"></script>
+	<script type="text/javascript" src="Scripts/moment/moment.js"></script>
+	<script type="text/javascript" src="Scripts/sweetalert2/sweetalert2.all.min.js"></script>
+
+	<script type="text/javascript" src="Scripts/app.js"></script>
+</head>
+
+<body>
+	<nav>
+		<div class="nav-wrapper">
+			<a href="#!" class="brand-logo">
+				<i class="material-icons prefix white-text">today</i>Agenda WCIS
+			</a>
+			<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+		</div>
+	</nav>
+
+
+	<div class="card">
+		<div class="card-content">
+			<div class="row">
+				<div class="input-field col s12 m6 l2">
+					<a href="#modalAgenda" class="modal-trigger" style="margin-left: 15px;font-size: larger;font-weight: 600;">
+						<span id="count_agendamentos_id" class="new badge green">0</span>
+						  Ver agenda
+					</a>
+				</div>					
+				<div class="input-field col s12 m6 l3">
+					<select id="agendamento_tipo">
+					  <option value="nenhum" disabled selected>Escolha o serviço</option>
+					  <option value="carro">Aluguel de carro</option>
+					  <option value="aluguel">Aluguel de máquinas diversas</option>					  
+					  <option value="consulta">Agendamento de consulta</option>
+					  <option value="estadia">Agendamento de estadia</option>
+					  <option value="prestacao">Prestação de conta</option>
+					  <option value="recebimento">Recebimento de mercadoria</option>
+					  <option value="outros">Serviços diversos</option>
+					</select>
+					<label>Tipo de agendamento</label>
+				</div>	
+			</div>
+
+			<div class="row detalhes">
+				<div class="input-field col s12 m12 l2">
+					<i class="material-icons prefix purple-text">today</i>
+					<input id="data_retirada" placeholder="16/07/2023 12:00" type="text" class="datepicker-de">
+					<label id="lblDataRetirada">Data Retirada</label>
+				</div>
+				<div class="input-field col s12 m12 l2">
+					<i class="material-icons prefix purple-text">today</i>
+					<input id="hora_retirada" type="text" class="timepicker-de">
+					<label id="lblHoraRetirada">Hora Retirada</label>
+				</div>
+
+				<div class="input-field col s12 m12 l2 div-devolucao">
+					<i class="material-icons prefix purple-text">today</i>
+					<input id="data_devolucao" placeholder="16/07/2023 20:00" type="text" class="datepicker-ate">
+					<label>Data Devolução</label>
+				</div>
+				<div class="input-field col s12 m12 l2 div-devolucao">
+					<i class="material-icons prefix purple-text">today</i>
+					<input id="hora_devolucao" type="text" class="timepicker-ate">
+					<label>Hora Devolução</label>
+				</div>
+				<div class="input-field col s12 m12 l2 div-devolucao">
+					<i class="material-icons prefix purple-text">access_time</i>
+					<input id="tempo_id" type="text" value="0">
+					<label>Tempo de reserva</label>
+				</div>
+				<div class="input-field col s12 m12 l2">
+					<i class="material-icons prefix purple-text">monetization_on</i>
+					<input id="valor_id" type="text" value="0,00">
+					<label>Valor</label>
+				</div>
+			</div>
+			<div class="row legenda">
+				<div class="col s12 m12 l12 center">
+					<h5 class="legenda-title">Reservas</h5>
+					<span>Clique abaixo e confirme a reserva</span>
+				</div>
+				<div class="col s12 m16 l6 center">
+					<span><i class="material-icons prefix  grey-text tooltipped tooltipped">today</i>
+						Off para reserva </span>
+				</div>
+				<div class="col s12 m16 l6 center">
+					<span><i class="material-icons prefix green-text tooltipped tooltipped">today</i>
+						On  para reserva</span>
+				</div>				
+			</div>			
+			<div class="row">
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large grey-text tooltipped tooltipped" data-tooltip="indisponivel"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large grey-text tooltipped tooltipped" data-tooltip="indisponivel"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large green-text pointer tooltipped"
+						data-tooltip="reservar"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large green-text pointer tooltipped" data-tooltip="reservar"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large grey-text pointer tooltipped" data-tooltip="reservar"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large green-text pointer tooltipped" data-tooltip="reservar"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large grey-text tooltipped" data-tooltip="indisponivel"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large grey-text tooltipped" data-tooltip="indisponivel"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large grey-text tooltipped" data-tooltip="indisponivel"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large grey-text tooltipped" data-tooltip="indisponivel"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large grey-text tooltipped" data-tooltip="indisponivel"
+						data-position="top">today</i>
+				</div>
+				<div class="col s3 m2 l2 center">
+					<i class="material-icons prefix large grey-text tooltipped" data-tooltip="indisponivel"
+						data-position="top">today</i>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12 m12 l12 center hide" id="btn_acao">
+					<button class="btn btn-large orange button-agenda" id="limpar">limpar reserva</button>
+					<button class="btn btn-large blue button-agenda" id="salvar">salvar reserva</button>
+				</div>
+			</div>			
+		</div>
+	</div>
+	
+	<!---------- Modal Structure -------------->
+	<div id="modalAgenda" class="modal purple">
+		<div class="modal-content">
+			<div class="row">
+				<div class="col s12 m12 l12">
+					<div class="card">
+						<div class="card-content">
+							<table id="table" class="responsive-table">
+								<thead>
+								  <tr>
+										<th>Protocolo</th>
+										<th>Reserva</th>
+										<th>Data/Hora Início</th>
+										<th>Data/Hora Fim</th>
+										<th>Valor</th>
+								  </tr>
+								</thead>						
+								<tbody id="tdados">
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer purple">
+				<a href="#!" class="modal-close waves-effect waves-green btn-flat white-text">fechar</a>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>
